@@ -1,87 +1,92 @@
-/* css/admin.css */
+/* admin.css */
 
-/* BODY */
+/* Cơ bản cho body và tiêu đề */
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background: #f9f9f9;
-  color: #333;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
 }
 
-/* TIÊU ĐỀ */
 h1 {
-  text-align: center;
-  color: #4CAF50;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
 }
 
-/* BẢNG ĐƠN HÀNG */
+/* Bảng đơn hàng */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background: white;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 10px 8px;
-  text-align: left;
-  font-size: 14px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
 }
 
 th {
-  background-color: #4CAF50;
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 tr:hover {
-  background-color: #e8f5e9;
+    background-color: #e8f5e9;
 }
 
-/* THÔNG BÁO LOAD */
-.loading {
-  text-align: center;
-  font-weight: bold;
-  margin-top: 20px;
-  color: #555;
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  thead tr {
-    display: none;
-  }
-
-  tr {
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-  }
-
-  td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
+/* Button xóa */
+button.delete {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
     border: none;
-    border-bottom: 1px solid #eee;
-  }
-
-  td::before {
-    content: attr(data-label);
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
-    flex-basis: 40%;
-  }
+    transition: 0.3s;
+}
+
+button.delete:hover {
+    background-color: #c82333;
+}
+
+/* Container hiển thị các món */
+.items {
+    margin-left: 5px;
+    line-height: 1.4;
+}
+
+/* Responsive: khi màn hình nhỏ */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    tr {
+        margin-bottom: 15px;
+    }
+    th {
+        text-align: right;
+        padding-right: 20px;
+    }
+    td {
+        text-align: right;
+        padding-right: 20px;
+        position: relative;
+    }
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
 }
