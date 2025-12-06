@@ -1,49 +1,87 @@
+/* css/admin.css */
+
+/* BODY */
 body {
-    font-family: Arial, sans-serif;
-    background: #f3f3f3;
-    margin: 0;
-    padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f9f9f9;
+  color: #333;
 }
 
-.container {
-    width: 90%;
-    max-width: 450px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+/* TIÊU ĐỀ */
+h1 {
+  text-align: center;
+  color: #4CAF50;
+  margin-bottom: 20px;
 }
 
-h2 {
-    text-align: center;
+/* BẢNG ĐƠN HÀNG */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: white;
 }
 
-input, select {
-    width: 100%;
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e8f5e9;
+}
+
+/* THÔNG BÁO LOAD */
+.loading {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #555;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 10px;
-    margin: 7px 0 15px 0;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-}
+  }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #0084ff;
-    color: white;
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    border-bottom: 1px solid #eee;
+  }
 
-button:hover {
-    opacity: 0.85;
-}
-
-.order-item {
-    background: #e8e8e8;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    flex-basis: 40%;
+  }
 }

@@ -1,23 +1,88 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Quản lý đơn hàng</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Quản lý đơn hàng</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #fdfdfd; }
+    h1 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #4CAF50; color: white; }
+    tr:nth-child(even){background-color: #f2f2f2;}
+    .loading { text-align: center; font-weight: bold; margin-top: 20px; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Danh sách đơn hàng</h2>
-    <div id="orders"></div>
-</div>
+<h1>Quản lý Đơn Hàng</h1>
+<div class="loading" id="loading">Đang tải đơn hàng...</div>
 
-<!-- Firebase v8 -->
+<table id="ordersTable" style="display:none;">
+  <thead>
+    <tr>
+      <th>Thời gian</th>
+      <th>Họ và tên</th>
+      <th>SĐT</th>
+      <th>Địa chỉ</th>
+      <th>Món đã chọn</th>
+    </tr>
+  </thead>
+  <tbody id="ordersBody">
+    <!-- Đơn hàng sẽ hiển thị ở đây -->
+  </tbody>
+</table>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-<script src="js/app.js"></script>
+<script>
+  // ------------------------------
+  // CẤU HÌNH FIREBASE
+  // ------------------------------
+  const firebaseConfig = {
+      apiKey: "AIzaSyCp6TNKfveeufiXmIdA77NRJE1XX8mML3c",
+      authDomain: "order-system-6c566.firebaseapp.com",
+      projectId: "order-system-6c566",
+      storageBucket: "order-system-6c566.firebasestorage.app",
+      messagingSenderId: "894961018592",
+      appId: "1:894961018592:web:801304cc03327e33415285",
+      measurementId: "G-114M4WWBE7"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const ordersBody = document.getElementById('ordersBody');
+  const ordersTable = document.getElementById('ordersTable');
+  const loading = document.getElementById('loading');
+
+  // Lấy dữ liệu đơn hàng từ Firestore
+  db.collection('orders').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+    ordersBody.innerHTML = ''; // xóa cũ
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const row = document.createElement('tr');
+
+      const date = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : '---';
+      row.innerHTML = `
+        <td>${date}</td>
+        <td>${data.name}</td>
+        <td>${data.phone}</td>
+        <td>${data.address}</td>
+        <td>${data.items.join(', ')}</td>
+      `;
+      ordersBody.appendChild(row);
+    });
+
+    loading.style.display = 'none';
+    ordersTable.style.display = 'table';
+  }, err => {
+    loading.innerText = "Lỗi tải đơn hàng: " + err;
+  });
+</script>
 
 </body>
 </html>

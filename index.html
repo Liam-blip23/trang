@@ -1,43 +1,194 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Đặt Hàng Online</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt hàng Trà sữa</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #fdfdfd; }
+    h1 { text-align: center; }
+    .menu { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .menu button { padding: 10px 15px; cursor: pointer; background: #4CAF50; color: white; border: none; border-radius: 5px; }
+    .menu button:hover { background: #45a049; }
+    .category { display: none; margin-bottom: 20px; }
+    .item { border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; cursor: pointer; }
+    .item.selected { background: #ffeeba; }
+    .form-group { margin-bottom: 10px; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button.submit { padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button.submit:hover { background: #0069d9; }
+    #msg { margin-top: 10px; font-weight: bold; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Đặt Đồ Uống</h2>
+<h1>Trang Đặt Hàng</h1>
 
-    <label>Chọn đồ uống:</label>
-    <select id="drink">
-        <option value="Nước táo">Nước táo</option>
-        <option value="Nước mía">Nước mía</option>
-        <option value="Hoa quả dầm">Hoa quả dầm</option>
-        <option value="Nước lọc">Nước lọc</option>
-    </select>
-
-    <label>Họ tên:</label>
-    <input id="name" placeholder="Nhập tên của bạn">
-
-    <label>Số điện thoại:</label>
-    <input id="phone" placeholder="0123..." type="tel">
-
-    <label>Địa chỉ:</label>
-    <input id="address" placeholder="Nhập địa chỉ giao hàng">
-
-    <button onclick="submitOrder()">Gửi đơn hàng</button>
-
-    <p id="msg"></p>
+<!-- Menu chính -->
+<div class="menu">
+  <button onclick="showCategory('trasua')">Trà Sữa</button>
+  <button onclick="showCategory('daxay')">Đá Xay</button>
+  <button onclick="showCategory('tratraicay')">Trà Trái Cây</button>
+  <button onclick="showCategory('tra')">Trà</button>
+  <button onclick="showCategory('nuocep')">Nước Ép - Sinh Tố</button>
+  <button onclick="showCategory('cafe')">Cà Phê</button>
+  <button onclick="showCategory('yakult')">Yakult</button>
+  <button onclick="showCategory('kem')">Kem Sữa</button>
+  <button onclick="showCategory('dounong')">Đồ Uống Nóng</button>
+  <button onclick="showCategory('topping')">Topping</button>
+  <button onclick="showCategory('doanvat')">Đồ Ăn Vặt</button>
+  <button onclick="showCategory('micay')">Mì Cay</button>
 </div>
 
-<!-- 🔥 Firebase v8 — CHUẨN -->
+<!-- Các danh mục -->
+<div id="trasua" class="category">
+  <div class="item" onclick="selectItem(this)">Trà Sữa Matcha <span class="size">M:25k | L:30k</span></div>
+  <div class="item" onclick="selectItem(this)">Trà Sữa Socola <span class="size">M:25k | L:30k</span></div>
+  <div class="item" onclick="selectItem(this)">Trà Sữa Khoai Môn <span class="size">M:25k | L:30k</span></div>
+</div>
+
+<div id="daxay" class="category">
+  <div class="item" onclick="selectItem(this)">Dưa Hấu Machiato <span class="size">40k</span></div>
+  <div class="item" onclick="selectItem(this)">Xoài Machiato <span class="size">40k</span></div>
+</div>
+
+<div id="tratraicay" class="category">
+  <div class="item" onclick="selectItem(this)">Trà Đào Cam Sả <span class="size">35k</span></div>
+  <div class="item" onclick="selectItem(this)">Trà Dưa Lưới <span class="size">35k</span></div>
+</div>
+
+<div id="tra" class="category">
+  <div class="item" onclick="selectItem(this)">Trà Chanh <span class="size">M:15k | L:20k</span></div>
+  <div class="item" onclick="selectItem(this)">Trà Quất <span class="size">M:15k | L:20k</span></div>
+</div>
+
+<div id="nuocep" class="category">
+  <div class="item" onclick="selectItem(this)">Cam Ép <span class="size">M:30k | L:35k</span></div>
+  <div class="item" onclick="selectItem(this)">Dứa Ép <span class="size">M:30k | L:35k</span></div>
+</div>
+
+<div id="cafe" class="category">
+  <div class="item" onclick="selectItem(this)">Nâu Đá <span class="size">30k</span></div>
+  <div class="item" onclick="selectItem(this)">Đen Đá <span class="size">25k</span></div>
+</div>
+
+<div id="yakult" class="category">
+  <div class="item" onclick="selectItem(this)">Yakult Việt Quất <span class="size">M:25k | L:30k</span></div>
+</div>
+
+<div id="kem" class="category">
+  <div class="item" onclick="selectItem(this)">Khoai Môn Kem Sữa <span class="size">M:30k | L:35k</span></div>
+</div>
+
+<div id="dounong" class="category">
+  <div class="item" onclick="selectItem(this)">Trà Gừng <span class="size">10k</span></div>
+</div>
+
+<div id="topping" class="category">
+  <div class="item" onclick="selectItem(this)">Trân Châu Trắng <span class="size">5k</span></div>
+  <div class="item" onclick="selectItem(this)">Trân Châu Đen <span class="size">5k</span></div>
+</div>
+
+<div id="doanvat" class="category">
+  <div class="item" onclick="selectItem(this)">Hướng Dương <span class="size">10k</span></div>
+  <div class="item" onclick="selectItem(this)">Bỏng Ngô <span class="size">25k</span></div>
+</div>
+
+<div id="micay" class="category">
+  <div class="item" onclick="selectItem(this)">Mì Cay Xúc Xích <span class="size">45k</span></div>
+</div>
+
+<!-- Form đặt hàng -->
+<h2>Thông tin khách hàng</h2>
+<div class="form-group">
+  <label>Họ và tên:</label>
+  <input type="text" id="name" placeholder="Nhập tên của bạn">
+</div>
+<div class="form-group">
+  <label>Số điện thoại:</label>
+  <input type="tel" id="phone" placeholder="0123456789">
+</div>
+<div class="form-group">
+  <label>Địa chỉ:</label>
+  <input type="text" id="address" placeholder="Nhập địa chỉ giao hàng">
+</div>
+
+<button class="submit" onclick="submitOrder()">Gửi đơn hàng</button>
+<p id="msg"></p>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-<script src="js/app.js"></script>
+<script>
+  // ------------------------------
+  // CẤU HÌNH FIREBASE
+  // ------------------------------
+  const firebaseConfig = {
+      apiKey: "AIzaSyCp6TNKfveeufiXmIdA77NRJE1XX8mML3c",
+      authDomain: "order-system-6c566.firebaseapp.com",
+      projectId: "order-system-6c566",
+      storageBucket: "order-system-6c566.firebasestorage.app",
+      messagingSenderId: "894961018592",
+      appId: "1:894961018592:web:801304cc03327e33415285",
+      measurementId: "G-114M4WWBE7"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Hiển thị danh mục
+  function showCategory(id) {
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(cat => cat.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+
+  // Chọn món
+  let selectedItems = [];
+  function selectItem(el) {
+    const text = el.innerText;
+    if(selectedItems.includes(text)){
+      selectedItems = selectedItems.filter(i => i !== text);
+      el.classList.remove('selected');
+    } else {
+      selectedItems.push(text);
+      el.classList.add('selected');
+    }
+  }
+
+  // Gửi đơn hàng
+  function submitOrder() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+
+    if(!name || !phone || !address || selectedItems.length === 0){
+      document.getElementById('msg').innerText = "Vui lòng điền đầy đủ thông tin và chọn món!";
+      return;
+    }
+
+    db.collection('orders').add({
+      name: name,
+      phone: phone,
+      address: address,
+      items: selectedItems,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      document.getElementById('msg').innerText = "Đơn hàng đã được gửi thành công!";
+      document.getElementById('name').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('address').value = '';
+      selectedItems = [];
+      document.querySelectorAll('.item.selected').forEach(el => el.classList.remove('selected'));
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('msg').innerText = "Gửi đơn hàng thất bại. Vui lòng thử lại!";
+    });
+  }
+</script>
 
 </body>
 </html>
